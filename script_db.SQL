@@ -1,7 +1,7 @@
 CREATE TABLE usuario (
     codUsuario SERIAL       NOT NULL,
     nome       VARCHAR(100) NOT NULL,
-    iPaddres   VARCHAR(15),
+    iPaddress   VARCHAR(15),
 
     CONSTRAINT pk_usuario PRIMARY KEY (codUsuario)
 );
