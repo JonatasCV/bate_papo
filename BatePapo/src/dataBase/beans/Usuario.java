@@ -1,4 +1,4 @@
-package beans;
+package dataBase.beans;
 
 public class Usuario {
     

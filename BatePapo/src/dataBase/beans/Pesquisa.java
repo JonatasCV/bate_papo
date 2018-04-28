@@ -1,4 +1,4 @@
-package beans;
+package dataBase.beans;
 
 import java.util.Calendar;
 
