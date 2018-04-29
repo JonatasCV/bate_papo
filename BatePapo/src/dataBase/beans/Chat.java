@@ -4,19 +4,19 @@ import java.util.Calendar;
 
 public class Chat {
     
-    private Usuario usuario1;
-    private Usuario usuario2;
+    private Usuario  usuario1;
+    private Usuario  usuario2;
     private Calendar dataHora;
-    private Integer topico;
+    private Topico   topico;
 
     public Chat() {
     }
 
-    public Chat(Usuario usuario1, Usuario usuario2, Calendar dataHora, Integer topico) {
+    public Chat(Usuario usuario1, Usuario usuario2, Calendar dataHora, Topico topico) {
         this.usuario1 = usuario1;
         this.usuario2 = usuario2;
         this.dataHora = dataHora;
-        this.topico = topico;
+        this.topico   = topico;
     }
 
     // GETTERS
@@ -32,7 +32,7 @@ public class Chat {
         return dataHora;
     }
 
-    public Integer getTopico() {
+    public Topico getTopico() {
         return topico;
     }
     
@@ -49,7 +49,7 @@ public class Chat {
         this.dataHora = dataHora;
     }
 
-    public void setTopico(Integer topico) {
+    public void setTopico(Topico topico) {
         this.topico = topico;
     }
 }

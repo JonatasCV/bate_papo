@@ -4,15 +4,15 @@ public class Usuario {
     
     private Integer codUsuario;
     private String nome;
-    private String iPaddres;
+    private String iPaddress;
 
     public Usuario() {
     }
 
-    public Usuario(Integer codUsuario, String nome, String iPaddres) {
+    public Usuario(Integer codUsuario, String nome, String iPaddress) {
         this.codUsuario = codUsuario;
-        this.nome = nome;
-        this.iPaddres = iPaddres;
+        this.nome       = nome;
+        this.iPaddress  = iPaddress;
     }
 
     // GETTERS
@@ -24,8 +24,8 @@ public class Usuario {
         return nome;
     }
 
-    public String getiPaddres() {
-        return iPaddres;
+    public String getiPaddress() {
+        return iPaddress;
     }
 
     // SETTERS
@@ -37,8 +37,8 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public void setiPaddres(String iPaddres) {
-        this.iPaddres = iPaddres;
+    public void setiPaddress(String iPaddres) {
+        this.iPaddress = iPaddres;
     }
     
     

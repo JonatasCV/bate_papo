@@ -12,7 +12,7 @@ public class Pesquisa {
 
     public Pesquisa(Calendar dataHora, Topico topico) {
         this.dataHora = dataHora;
-        this.topico = topico;
+        this.topico   = topico;
     }
     
     // GETTERS

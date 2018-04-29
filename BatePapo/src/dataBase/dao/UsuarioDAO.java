@@ -16,9 +16,9 @@ public class UsuarioDAO {
         PreparedStatement pst;
         try {
             pst = ConectaBD.getConection().prepareStatement(
-                    "INSERT INTO usuario (nome, iPaddres) VALUES (?, ?)");
+                    "INSERT INTO usuario (nome, iPaddress) VALUES (?, ?)");
             pst.setString(1, obj.getNome());
-            pst.setString(2, obj.getiPaddres());
+            pst.setString(2, obj.getiPaddress());
             pst.execute();
         } catch (SQLException ex) {
             // TRATAR EXCESSAO
@@ -31,9 +31,9 @@ public class UsuarioDAO {
         PreparedStatement pst;
         try {
             pst = ConectaBD.getConection().prepareStatement(
-               "UPDATE usuario set nome = ?, iPaddres = ? WHERE codUsuario = ?");
+                    "UPDATE usuario SET nome = ?, iPaddress = ? WHERE codUsuario = ?");
             pst.setString(1, obj.getNome());
-            pst.setString(2, obj.getiPaddres());
+            pst.setString(2, obj.getiPaddress());
             pst.setInt(3, obj.getCodUsuario());
             pst.execute();
         } catch (SQLException ex) {
@@ -47,7 +47,7 @@ public class UsuarioDAO {
         PreparedStatement pst;
         try {
             pst = ConectaBD.getConection().prepareStatement(
-               "DELETE from usuario WHERE codUsuario = ?");
+                    "DELETE FROM usuario WHERE codUsuario = ?");
             pst.setInt(1, obj.getCodUsuario());
             pst.execute();
         } catch (SQLException ex) {
@@ -61,19 +61,22 @@ public class UsuarioDAO {
         Usuario obj = null;
         ResultSet rs;
         PreparedStatement pst;
+        
         try {
             pst = ConectaBD.getConection().prepareStatement(
                     "SELECT * FROM usuario WHERE codUsuario = ?");
             pst.setInt(1, id);
             rs = pst.executeQuery();
-            if(rs.next()) {
+            
+            if (rs.next()) {
                 obj = new Usuario(id, rs.getString("nome"), 
-                                      rs.getString("iPaddres"));
+                                      rs.getString("iPaddress"));
             }
         } catch (SQLException ex) {
             // TRATAR EXCESSAO
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         return obj;
     }
 
@@ -81,6 +84,7 @@ public class UsuarioDAO {
         List<Usuario> usuarios = new ArrayList<>();
         ResultSet rs;
         PreparedStatement pst;
+        
         try {
             pst = ConectaBD.getConection().prepareStatement(
                     "SELECT * FROM usuario ORDER BY nome");
@@ -88,12 +92,14 @@ public class UsuarioDAO {
             while(rs.next()) {
                 usuarios.add(new Usuario(rs.getInt("codUsuario"), 
                                         rs.getString("nome"), 
-                                        rs.getString("iPaddres")));
+                                        rs.getString("iPaddress")));
             }
         } catch (SQLException ex) {
             // TRATAR EXCESSAO
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         return usuarios;
     }
+    
 }

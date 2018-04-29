@@ -11,7 +11,7 @@ public class Acesso {
     }
 
     public Acesso(Usuario usuario, Calendar dataHora) {
-        this.usuario = usuario;
+        this.usuario  = usuario;
         this.dataHora = dataHora;
     }
 

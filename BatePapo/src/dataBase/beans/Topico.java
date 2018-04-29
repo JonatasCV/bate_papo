@@ -9,7 +9,7 @@ public class Topico {
     }
 
     public Topico(Integer id, String nome) {
-        this.id = id;
+        this.id   = id;
         this.nome = nome;
     }
 
