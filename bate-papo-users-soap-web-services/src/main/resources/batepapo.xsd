@@ -1,0 +1,70 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.batepapo.com/xml/users"
+           targetNamespace="http://www.batepapo.com/xml/users" elementFormDefault="qualified">
+
+   <xs:element name="incluirUsuarioRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="usuario" type="tns:Usuario"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="incluirUsuarioResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="usuario" type="tns:Usuario"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="alterarUsuarioRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="usuario" type="tns:Usuario"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="alterarUsuarioResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="usuario" type="tns:Usuario"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="excluirUsuarioRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userid" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+        
+    <xs:element name="excluirUsuarioResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="status" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="getTodosUsuariosRequest" />
+   
+   <xs:element name="todosUsuarioResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="usuario" type="tns:Usuario" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:complexType name="Usuario">
+	    	<xs:sequence>
+	    		<xs:element name="id" type="xs:long" />
+	    		<xs:element name="nome" type="xs:string" />
+	    		<xs:element name="iPaddress" type="xs:string" />
+	    	</xs:sequence>
+    </xs:complexType>
+    
+</xs:schema>
