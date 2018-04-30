@@ -61,7 +61,7 @@
     
     <xs:complexType name="Usuario">
 	    	<xs:sequence>
-	    		<xs:element name="id" type="xs:long" />
+	    		<xs:element name="codUsuario" type="xs:long" />
 	    		<xs:element name="nome" type="xs:string" />
 	    		<xs:element name="iPaddress" type="xs:string" />
 	    	</xs:sequence>

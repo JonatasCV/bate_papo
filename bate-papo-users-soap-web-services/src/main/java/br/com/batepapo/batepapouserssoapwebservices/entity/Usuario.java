@@ -8,16 +8,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="usuario")
+@Table(name="usuario", uniqueConstraints = @UniqueConstraint(columnNames = "codUsuario", name = "pk_usuario"))
 public class Usuario implements Serializable{
 
 	private static final long serialVersionUID = -4290262452288506612L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long codUsuario;
 	
 	@Column(name="nome")
 	private String nome;
@@ -25,11 +26,11 @@ public class Usuario implements Serializable{
 	@Column(name="ipaddress")
 	private String iPaddress;
 	
-	public long getId() {
-		return id;
+	public long getCodUsuario() {
+		return codUsuario;
 	}
-	public void setId(long id) {
-		this.id = id;
+	public void setCodUsuario(long id) {
+		this.codUsuario = id;
 	}
 	public String getNome() {
 		return nome;

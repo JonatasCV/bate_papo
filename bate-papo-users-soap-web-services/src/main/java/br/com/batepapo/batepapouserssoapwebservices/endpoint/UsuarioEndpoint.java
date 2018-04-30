@@ -32,9 +32,9 @@ public class UsuarioEndpoint {
 	public IncluirUsuarioResponse incluirUsuario(@RequestPayload IncluirUsuarioRequest request) {
 		IncluirUsuarioResponse response = new IncluirUsuarioResponse();
 		Usuario usuario = new Usuario();
-		BeanUtils.copyProperties(request.getUsuario(), usuario, "id");
+		BeanUtils.copyProperties(request.getUsuario(), usuario, "codUsuario");
 		if(repository.save(usuario)!=null) {
-			request.getUsuario().setId(usuario.getId());
+			request.getUsuario().setCodUsuario(usuario.getCodUsuario());
 			response.setUsuario(request.getUsuario());
 		}
 		return response;
@@ -69,7 +69,7 @@ public class UsuarioEndpoint {
 	@ResponsePayload
 	public TodosUsuarioResponse getAll() {
 		TodosUsuarioResponse response = new TodosUsuarioResponse();
-		repository.findAllByOrderByIdAsc().forEach(user -> {
+		repository.findAllByOrderByCodUsuarioAsc().forEach(user -> {
 			br.com.batepapo.batepapouserssoapwebservices.dto.Usuario dto = new br.com.batepapo.batepapouserssoapwebservices.dto.Usuario();
 			BeanUtils.copyProperties(user, dto);
 			response.getUsuario().add(dto);
