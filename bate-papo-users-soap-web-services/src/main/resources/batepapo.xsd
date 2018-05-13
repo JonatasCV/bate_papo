@@ -36,7 +36,7 @@
     <xs:element name="excluirUsuarioRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="userid" type="xs:long"/>
+                <xs:element name="codUsuario" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -49,7 +49,7 @@
         </xs:complexType>
     </xs:element>
     
-    <xs:element name="getTodosUsuariosRequest" />
+    <xs:element name="todosUsuarioRequest" />
    
    <xs:element name="todosUsuarioResponse">
         <xs:complexType>
@@ -58,6 +58,74 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+    
+    <xs:element name="inserirAcessoRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codUsuario" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    
+    <xs:element name="inserirAcessoResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codUsuario" type="xs:long"/>
+                <xs:element name="dataHora" type="xs:dateTime" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="inserirPesquisaRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="topico" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    
+    <xs:element name="inserirPesquisaResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="topico" type="xs:long"/>
+                <xs:element name="dataHora" type="xs:dateTime" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="inserirChatRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codUsuario1" type="xs:long"/>
+                <xs:element name="codUsuario2" type="xs:long"/>
+                <xs:element name="topico" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    
+    <xs:element name="inserirChatResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codUsuario1" type="xs:long"/>
+                <xs:element name="codUsuario2" type="xs:long"/>
+                <xs:element name="topico" type="xs:long"/>
+                <xs:element name="dataHora" type="xs:dateTime" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:complexType name="Chat">
+	    	<xs:sequence>
+	    		<xs:element name="codUsuario1" type="xs:long"/>
+            <xs:element name="codUsuario2" type="xs:long"/>
+            <xs:element name="topico" type="xs:long"/>
+            <xs:element name="dataHora" type="xs:dateTime" />
+	    	</xs:sequence>
+    </xs:complexType>
+    
     
     <xs:complexType name="Usuario">
 	    	<xs:sequence>

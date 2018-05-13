@@ -56,8 +56,8 @@ public class UsuarioEndpoint {
 	@ResponsePayload
 	public ExcluirUsuarioResponse excluirUsuario(@RequestPayload ExcluirUsuarioRequest request) {
 		ExcluirUsuarioResponse response = new ExcluirUsuarioResponse();
-		if(repository.findById(request.getUserid()).isPresent()) {
-			repository.deleteById(request.getUserid());
+		if(repository.findById(request.getCodUsuario()).isPresent()) {
+			repository.deleteById(request.getCodUsuario());
 			response.setStatus(true);
 		} else {
 			response.setStatus(false);
@@ -65,7 +65,7 @@ public class UsuarioEndpoint {
 		return response;
 	}
 	
-	@PayloadRoot(namespace=NAMESPACE_URI, localPart="getTodosUsuariosRequest")
+	@PayloadRoot(namespace=NAMESPACE_URI, localPart="todosUsuarioRequest")
 	@ResponsePayload
 	public TodosUsuarioResponse getAll() {
 		TodosUsuarioResponse response = new TodosUsuarioResponse();

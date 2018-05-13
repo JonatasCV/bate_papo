@@ -12,7 +12,9 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
@@ -25,7 +27,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="usuario" type="{http://www.batepapo.com/xml/users}Usuario"/>
+ *         &lt;element name="topico" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="dataHora" type="{http://www.w3.org/2001/XMLSchema}dateTime"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,36 +39,55 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "usuario"
+    "topico",
+    "dataHora"
 })
-@XmlRootElement(name = "incluirUsuarioResponse")
-public class IncluirUsuarioResponse {
+@XmlRootElement(name = "inserirPesquisaResponse")
+public class InserirPesquisaResponse {
 
+    protected long topico;
     @XmlElement(required = true)
-    protected Usuario usuario;
+    @XmlSchemaType(name = "dateTime")
+    protected XMLGregorianCalendar dataHora;
 
     /**
-     * Gets the value of the usuario property.
+     * Gets the value of the topico property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Usuario }
-     *     
      */
-    public Usuario getUsuario() {
-        return usuario;
+    public long getTopico() {
+        return topico;
     }
 
     /**
-     * Sets the value of the usuario property.
+     * Sets the value of the topico property.
+     * 
+     */
+    public void setTopico(long value) {
+        this.topico = value;
+    }
+
+    /**
+     * Gets the value of the dataHora property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link XMLGregorianCalendar }
+     *     
+     */
+    public XMLGregorianCalendar getDataHora() {
+        return dataHora;
+    }
+
+    /**
+     * Sets the value of the dataHora property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Usuario }
+     *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setUsuario(Usuario value) {
-        this.usuario = value;
+    public void setDataHora(XMLGregorianCalendar value) {
+        this.dataHora = value;
     }
 
 }
