@@ -1,7 +1,7 @@
 CREATE TABLE usuario (
     codUsuario SERIAL       NOT NULL,
     nome       VARCHAR(100) NOT NULL,
-    iPaddress   VARCHAR(15),
+    iPaddress  VARCHAR(15),
 
     CONSTRAINT pk_usuario PRIMARY KEY (codUsuario)
 );
@@ -11,6 +11,15 @@ CREATE TABLE topico (
     nome VARCHAR(30) NOT NULL,
 
     CONSTRAINT pk_topico PRIMARY KEY (id)
+);
+
+CREATE TABLE usuario_topico (
+	codUsuario INTEGER NOT NULL,
+	idTopico   INTEGER NOT NULL,
+
+	CONSTRAINT pk_usuario_topico PRIMARY KEY (codUsuario, idTopico),
+	CONSTRAINT fk_usuario_topico_usuario FOREIGN KEY (codUsuario) REFERENCES Usuario(codUsuario),
+	CONSTRAINT fk_usuario_topico_topico FOREIGN KEY (idTopico) REFERENCES Topico(id)
 );
 
 CREATE TABLE acesso (

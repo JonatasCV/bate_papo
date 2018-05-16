@@ -91,8 +91,35 @@ public class UsuarioDAO {
             rs = pst.executeQuery();
             while(rs.next()) {
                 usuarios.add(new Usuario(rs.getInt("codUsuario"), 
-                                        rs.getString("nome"), 
-                                        rs.getString("iPaddress")));
+                                         rs.getString("nome"), 
+                                         rs.getString("iPaddress")));
+            }
+        } catch (SQLException ex) {
+            // TRATAR EXCESSAO
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return usuarios;
+    }
+    
+    public List<Usuario> listUsersByTopic(int idTopico) {
+        List<Usuario> usuarios = new ArrayList<>();
+        ResultSet rs;
+        PreparedStatement pst;
+
+        try {
+            pst = ConectaBD.getConection().prepareStatement(
+                    "SELECT u.* " +
+                    "FROM usuario u INNER JOIN usuario_topico ut ON ut.codUsuario = u.codUsuario " +
+                    "WHERE ut.idTopico = ? " +
+                    "ORDER BY nome");
+            pst.setInt(1, idTopico);
+
+            rs = pst.executeQuery();
+            while(rs.next()) {
+                usuarios.add(new Usuario(rs.getInt("codUsuario"), 
+                                         rs.getString("nome"), 
+                                         rs.getString("iPaddress")));
             }
         } catch (SQLException ex) {
             // TRATAR EXCESSAO

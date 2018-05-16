@@ -86,7 +86,7 @@ public class TopicoDAO {
 
             while(rs.next()) {
                 topicos.add(new Topico(rs.getInt("id"), 
-                                        rs.getString("nome")));
+                                       rs.getString("nome")));
             }
         } catch (SQLException ex) {
             // TRATAR EXCESSAO

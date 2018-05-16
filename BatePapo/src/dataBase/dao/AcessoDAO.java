@@ -3,11 +3,8 @@ package dataBase.dao;
 import dataBase.beans.Acesso;
 import dataBase.util.ConectaBD;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
