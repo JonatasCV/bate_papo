@@ -12,7 +12,7 @@ public class PesquisaDAO {
 
     private static Timestamp ts;
     
-    public void insert(Pesquisa obj) {
+    public static void insert(Pesquisa obj) {
         PreparedStatement pst;
         try {
             pst = ConectaBD.getConection().prepareStatement(
@@ -30,7 +30,7 @@ public class PesquisaDAO {
         }
     }
 
-    public void delete(Pesquisa obj) {
+    public static void delete(Pesquisa obj) {
         PreparedStatement pst;
         try {
             pst = ConectaBD.getConection().prepareStatement(

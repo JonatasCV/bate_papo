@@ -12,7 +12,7 @@ public class ChatDAO {
     
     private static Timestamp ts;
     
-    public void insert(Chat obj) {
+    public static void insert(Chat obj) {
         PreparedStatement pst;
         try {
             pst = ConectaBD.getConection().prepareStatement(
@@ -31,7 +31,7 @@ public class ChatDAO {
         }
     }
 
-    public void delete(Chat obj) {
+    public static void delete(Chat obj) {
         PreparedStatement pst;
         try {
             pst = ConectaBD.getConection().prepareStatement(

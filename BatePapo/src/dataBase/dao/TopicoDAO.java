@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 public class TopicoDAO {
 
-    public void insert(Topico obj) {
+    public static void insert(Topico obj) {
         PreparedStatement pst;
         try {
             pst = ConectaBD.getConection().prepareStatement(
@@ -25,7 +25,7 @@ public class TopicoDAO {
         }
     }
 
-    public void update(Topico obj) {
+    public static void update(Topico obj) {
         PreparedStatement pst;
         try {
             pst = ConectaBD.getConection().prepareStatement(
@@ -39,7 +39,7 @@ public class TopicoDAO {
         }
     }
 
-    public void delete(Topico obj) {
+    public static void delete(Topico obj) {
         PreparedStatement pst;
         try {
             pst = ConectaBD.getConection().prepareStatement(
@@ -52,7 +52,7 @@ public class TopicoDAO {
         }
     }
 
-    public Topico findById(Integer id) {
+    public static Topico findById(Integer id) {
         Topico obj = null;
         ResultSet rs;
         PreparedStatement pst;
@@ -74,7 +74,7 @@ public class TopicoDAO {
         return obj;
     }
 
-    public List<Topico> findAll() {
+    public static List<Topico> findAll() {
         List<Topico> topicos = new ArrayList<>();
         ResultSet rs;
         PreparedStatement pst;
@@ -94,6 +94,27 @@ public class TopicoDAO {
         }
 
         return topicos;
+    }
+    
+    public static boolean TopicExists(String name) {
+        ResultSet rs;
+        PreparedStatement pst;
+        
+        try {
+            pst = ConectaBD.getConection().prepareStatement(
+                    "SELECT * FROM topico WHERE nome = ?");
+            pst.setString(1, name);
+            rs = pst.executeQuery();
+            
+            if (rs.next())
+                return true;
+        } catch (SQLException ex) {
+            // TRATAR EXCESSAO
+            Logger.getLogger(TopicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
+        return false;
     }
     
 }

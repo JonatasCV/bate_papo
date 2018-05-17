@@ -12,7 +12,7 @@ public class AcessoDAO {
     
     private static Timestamp ts;
 
-    public void insert(Acesso obj) {
+    public static void insert(Acesso obj) {
         PreparedStatement pst;
         try {
             pst = ConectaBD.getConection().prepareStatement(
@@ -29,7 +29,7 @@ public class AcessoDAO {
         }
     }
 
-    public void delete(Acesso obj) {
+    public static void delete(Acesso obj) {
         PreparedStatement pst;
         try {
             pst = ConectaBD.getConection().prepareStatement(

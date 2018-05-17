@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 public class Usuario_TopicoDAO {
 
-    public void insert(Usuario_Topico obj) {
+    public static void insert(Usuario_Topico obj) {
         PreparedStatement pst;
         try {
             pst = ConectaBD.getConection().prepareStatement(
@@ -23,7 +23,7 @@ public class Usuario_TopicoDAO {
         }
     }
 
-    public void delete(Usuario_Topico obj) {
+    public static void delete(Usuario_Topico obj) {
         PreparedStatement pst;
         try {
             pst = ConectaBD.getConection().prepareStatement(

@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 public class UsuarioDAO {
 
-    public void insert(Usuario obj) {
+    public static void insert(Usuario obj) {
         PreparedStatement pst;
         try {
             pst = ConectaBD.getConection().prepareStatement(
@@ -27,7 +27,7 @@ public class UsuarioDAO {
         }
     }
 
-    public void update(Usuario obj) {
+    public static void update(Usuario obj) {
         PreparedStatement pst;
         try {
             pst = ConectaBD.getConection().prepareStatement(
@@ -43,7 +43,7 @@ public class UsuarioDAO {
         }
     }
 
-    public void delete(Usuario obj) {
+    public static void delete(Usuario obj) {
         PreparedStatement pst;
         try {
             pst = ConectaBD.getConection().prepareStatement(
@@ -57,7 +57,7 @@ public class UsuarioDAO {
         }
     }
 
-    public Usuario findById(Integer id) {
+    public static Usuario findById(Integer id) {
         Usuario obj = null;
         ResultSet rs;
         PreparedStatement pst;
@@ -80,7 +80,7 @@ public class UsuarioDAO {
         return obj;
     }
 
-    public List<Usuario> findAll() {
+    public static List<Usuario> findAll() {
         List<Usuario> usuarios = new ArrayList<>();
         ResultSet rs;
         PreparedStatement pst;
@@ -127,6 +127,27 @@ public class UsuarioDAO {
         }
         
         return usuarios;
+    }
+
+    public static boolean userExists(String name) {
+        ResultSet rs;
+        PreparedStatement pst;
+        
+        try {
+            pst = ConectaBD.getConection().prepareStatement(
+                    "SELECT * FROM usuario WHERE nome = ?");
+            pst.setString(1, name);
+            rs = pst.executeQuery();
+            
+            if (rs.next())
+                return true;
+        } catch (SQLException ex) {
+            // TRATAR EXCESSAO
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
+        return false;
     }
     
 }
