@@ -5,8 +5,11 @@ import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,23 +25,24 @@ public class Acesso implements Serializable{
 	public Acesso() {
 		
 	}
-	public Acesso(long codUsuario, Calendar dataHora) {
+	public Acesso(Usuario codUsuario, Calendar dataHora) {
 		this.codUsuario = codUsuario;
 		this.dataHora = dataHora;
 	}
 
 	@Id
-	@Column(name="codusuario")
-	private long codUsuario;
+	@ManyToOne
+	@JoinColumn(name="codUsuario", referencedColumnName="codUsuario",foreignKey = @ForeignKey(name = "fk_acesso_usuario"))
+	private Usuario codUsuario;
 	@Id
 	@Column(name="datahora")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar dataHora;
 	
-	public long getCodUsuario() {
+	public Usuario getCodUsuario() {
 		return codUsuario;
 	}
-	public void setCodUsuario(long codUsuario) {
+	public void setCodUsuario(Usuario codUsuario) {
 		this.codUsuario = codUsuario;
 	}
 	public Calendar getDataHora() {

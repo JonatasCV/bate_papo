@@ -1,12 +1,17 @@
 package br.com.batepapo.batepapouserssoapwebservices.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -26,6 +31,15 @@ public class Usuario implements Serializable{
 	@Column(name="ipaddress")
 	private String iPaddress;
 	
+	@OneToMany(mappedBy = "codUsuario", fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
+    private List<Acesso> acessos = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "codUsuario1", fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
+    private List<Chat> chatUser1;
+
+	@OneToMany(mappedBy = "codUsuario2", fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
+    private List<Chat> chatUser2;
+	
 	public long getCodUsuario() {
 		return codUsuario;
 	}
@@ -44,5 +58,10 @@ public class Usuario implements Serializable{
 	public void setiPaddress(String iPaddress) {
 		this.iPaddress = iPaddress;
 	}
-	
+	public List<Acesso> getAcessos() {
+		return acessos;
+	}
+	public void setAcessos(List<Acesso> acessos) {
+		this.acessos = acessos;
+	}
 }

@@ -1,5 +1,7 @@
 package br.com.batepapo.batepapouserssoapwebservices.endpoint;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -21,7 +23,8 @@ import br.com.batepapo.batepapouserssoapwebservices.repository.UserRepository;
 public class UsuarioEndpoint {
 	
 	private static final String NAMESPACE_URI = "http://www.batepapo.com/xml/users";
-	
+	private static final Logger logger = LoggerFactory.getLogger(UsuarioEndpoint.class);	
+
 	@Autowired
 	private UserRepository repository;
 	
@@ -68,6 +71,7 @@ public class UsuarioEndpoint {
 	@PayloadRoot(namespace=NAMESPACE_URI, localPart="todosUsuarioRequest")
 	@ResponsePayload
 	public TodosUsuarioResponse getAll() {
+		logger.debug("get all operation");
 		TodosUsuarioResponse response = new TodosUsuarioResponse();
 		repository.findAllByOrderByCodUsuarioAsc().forEach(user -> {
 			br.com.batepapo.batepapouserssoapwebservices.dto.Usuario dto = new br.com.batepapo.batepapouserssoapwebservices.dto.Usuario();
