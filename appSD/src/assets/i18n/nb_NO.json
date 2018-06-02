@@ -1,0 +1,68 @@
+{
+  "BACK_BUTTON_TEXT": "Voltar",
+
+  "NAME": "Nome",
+  "EMAIL": "Email",
+  "USERNAME": "Nome de Usuário",
+  "PASSWORD": "Senha",
+  "LOGIN": "Entrar",
+  "SIGNUP": "Cadastre-se",
+
+  "TAB1_TITLE": "Usuários",
+  "TAB2_TITLE": "Principal",
+  "TAB3_TITLE": "Tópicos",
+  "TAB4_TITLE": "Tópicos",
+
+  "MAP_TITLE": "Mapa",
+
+  "TUTORIAL_SKIP_BUTTON": "Pular",
+  "TUTORIAL_CONTINUE_BUTTON": "Continuar",
+  
+  "TUTORIAL_SLIDE1_TITLE": "Bem-vindo ao Aplicativo de Sistemas Distribuídos Ionic",
+  "TUTORIAL_SLIDE1_DESCRIPTION": "O <b>Aplicativo de Sistemas Distribuídos Ionic</b> é um aplicativo onde você encontrará todos os dados de Pesquisa na rede P2P.",
+
+  "TUTORIAL_SLIDE2_TITLE": "Como usar o  Aplicativo de Sistemas Distribuídos Ionic",
+  "TUTORIAL_SLIDE2_DESCRIPTION": "Nós disponibilizamos diversas formas de você pesquisar os dados da Rede P2P. Você pode mudar o HOST de requisições pela interface de Configurações.",
+
+  "TUTORIAL_SLIDE3_TITLE": "Como começar",
+  "TUTORIAL_SLIDE3_DESCRIPTION": "Clique em Pular no canto superior direito ou passe para o próximo Slide",
+
+  "TUTORIAL_SLIDE4_TITLE": "Começar",
+
+
+  "SETTINGS_TITLE": "Configurações",
+  "SETTINGS_OPTION1": "HOST",
+  "SETTINGS_OPTION2": "Url para POST",
+  "SETTINGS_OPTION3": "Url para Delete",
+
+  "SETTINGS_PAGE_PROFILE": "Editar Perfil",
+
+
+  "WELCOME_INTRO": "Conheça Sistemas Distribuidos",
+
+  "WELCOME_TITLE": "Bem-vindo",
+
+  "LOGIN_TITLE": "Entrar",
+  "LOGIN_ERROR": "Não foi possível entrar na sua conta. Verifique seus dados e tente novamente.",
+  "LOGIN_BUTTON": "Entrar",
+  "SIGNUP_TITLE": "Cadastre-se",
+  "SIGNUP_ERROR": "Não foi possível criar sua conta. Verifique seus dados e tente novamente.",
+  "SIGNUP_BUTTON": "Cadastre-se",
+
+  "LIST_MASTER_TITLE": "Usuários",
+
+  "ITEM_CREATE_TITLE": "Novo Item",
+  "ITEM_CREATE_CHOOSE_IMAGE": "Adicionar Imagem",
+
+  "ITEM_NAME_PLACEHOLDER": "Nome",
+  "ITEM_ABOUT_PLACEHOLDER": "Sobre",
+
+  "DONE_BUTTON": "Pronto",
+  "CANCEL_BUTTON": "Cancelar",
+  "DELETE_BUTTON": "Apagar",
+
+  "CARDS_TITLE": "Tópicos",
+
+  "SEARCH_TITLE": "Busca",
+  "SEARCH_PLACEHOLDER": "Procure um item da lista, ex: \"User 1\""
+}
