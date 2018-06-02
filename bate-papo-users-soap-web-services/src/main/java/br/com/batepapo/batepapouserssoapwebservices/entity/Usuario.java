@@ -25,7 +25,7 @@ public class Usuario implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long codUsuario;
 	
-	@Column(name="nome")
+	@Column(name="nome", unique=true)
 	private String nome;
 	
 	@Column(name="ipaddress")

@@ -6,15 +6,12 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class Cliente extends javax.swing.JFrame {
 
     private static final String HOST  = "localhost";
-    private static final int PORTA    = 112233;
+    private static final int PORTA    = 11223;
     private static final int MSG_SIZE = 100;
 
     /**
@@ -22,6 +19,7 @@ public class Cliente extends javax.swing.JFrame {
      */
     public Cliente() {
         initComponents();
+        
     }
 
     /**
@@ -177,7 +175,7 @@ public class Cliente extends javax.swing.JFrame {
             DatagramPacket pct;
             
             String nomeUser = txtNomeUser.getText();
-            
+
             if (nomeUser.length() > MSG_SIZE) {
                 JOptionPane.showMessageDialog(null, "O nome do usuário não pode ultrapassar " + MSG_SIZE + " caracteres!");
                 return;
@@ -227,6 +225,10 @@ public class Cliente extends javax.swing.JFrame {
                 pct = new DatagramPacket(msg, msg.length, addr, PORTA); 
                 soc.send(pct);
             }
+            
+            msg = "end".getBytes();
+            pct = new DatagramPacket(msg, msg.length, addr, PORTA); 
+            soc.send(pct);
             
             // recebe do server os users disponiveis para conversa nos topicos escolhidos
             
