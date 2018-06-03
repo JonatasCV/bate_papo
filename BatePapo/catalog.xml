@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
-    <system systemId="https://batepaposd.herokuapp.com/service/usuarioWsdl.wsdl" uri="xml-resources/web-service-references/usuarioWsdl/wsdl/batepaposd.herokuapp.com/service/usuarioWsdl.wsdl"/>
+    <system systemId="https://batepaposd.herokuapp.com/service/usuarioWsdl.wsdl" uri="wsdl/batepaposd.herokuapp.com/service/usuarioWsdl.wsdl"/>
 </catalog>
