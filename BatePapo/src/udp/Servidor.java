@@ -1,7 +1,5 @@
 package udp;
 
-import dataBase.beans.Topico;
-import dataBase.dao.TopicoDAO;
 import dataBase.dao.UsuarioDAO;
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -58,7 +56,6 @@ public class Servidor {
                 
                 break;
             }
-            
             BuscarUsuarioPorNomeRequest request = new BuscarUsuarioPorNomeRequest();
             request.setNome(str.trim());
             System.out.println("Ola: " + str);
@@ -89,7 +86,6 @@ public class Servidor {
                 InserirAcessoRequest requestAcesso = new InserirAcessoRequest();
                 requestAcesso.setCodUsuario(usuario.getCodUsuario());
                 InserirAcessoResponse responseAcesso = port.inserirAcesso(requestAcesso);
-                
             } else {
                 str = "Usuário inexistente!";
                 msg = str.getBytes();                
