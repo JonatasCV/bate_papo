@@ -55,6 +55,11 @@ public class Cliente extends javax.swing.JFrame {
 
         chk1.setText("Eleições 2018");
         chk1.setName("chk1"); // NOI18N
+        chk1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chk1ActionPerformed(evt);
+            }
+        });
 
         chk2.setText("Segurança Pública");
         chk2.setName("chk2"); // NOI18N
@@ -241,6 +246,10 @@ public class Cliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro no envio das mensagens ao servidor!");
         }
     }//GEN-LAST:event_btnOkActionPerformed
+
+    private void chk1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chk1ActionPerformed
 
     /**
      * @param args the command line arguments

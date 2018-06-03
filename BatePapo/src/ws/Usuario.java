@@ -1,6 +1,7 @@
 
 package ws;
 
+import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -34,8 +35,9 @@ import javax.xml.bind.annotation.XmlType;
     "nome",
     "iPaddress"
 })
-public class Usuario {
-
+public class Usuario implements Serializable{
+    
+    private static final long serialVersionUID = 5950169519310163575L;
     protected long codUsuario;
     @XmlElement(required = true)
     protected String nome;

@@ -37,6 +37,18 @@ public interface UsuariosPort {
 
     /**
      * 
+     * @param pesquisaInteressadosTopicoRequest
+     * @return
+     *     returns ws.PesquisaInteressadosTopicoResponse
+     */
+    @WebMethod
+    @WebResult(name = "pesquisaInteressadosTopicoResponse", targetNamespace = "http://www.batepapo.com/xml/users", partName = "pesquisaInteressadosTopicoResponse")
+    public PesquisaInteressadosTopicoResponse pesquisaInteressadosTopico(
+        @WebParam(name = "pesquisaInteressadosTopicoRequest", targetNamespace = "http://www.batepapo.com/xml/users", partName = "pesquisaInteressadosTopicoRequest")
+        PesquisaInteressadosTopicoRequest pesquisaInteressadosTopicoRequest);
+
+    /**
+     * 
      * @param buscarUsuarioPorNomeRequest
      * @return
      *     returns ws.BuscarUsuarioPorNomeResponse

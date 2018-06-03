@@ -64,7 +64,7 @@ public class Servidor {
             System.out.println("Ola: " + str);
             BuscarUsuarioPorNomeResponse response = port.buscarUsuarioPorNome(request);
             Usuario usuario = response.getUsuario();
-            System.out.println("Ola: " + response.getUsuario().getNome());
+            System.out.println("Ola: " + response.getUsuario().getNome() + " id: " + response.getUsuario().getCodUsuario());
             
             List<Long> topicosInterese = new ArrayList<>();
             

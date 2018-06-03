@@ -138,6 +138,9 @@
             <Property name="text" type="java.lang.String" value="Elei&#xe7;&#xf5;es 2018"/>
             <Property name="name" type="java.lang.String" value="chk1" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chk1ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JCheckBox" name="chk2">
           <Properties>

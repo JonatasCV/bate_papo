@@ -130,6 +130,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link PesquisaInteressadosTopicoRequest }
+     * 
+     */
+    public PesquisaInteressadosTopicoRequest createPesquisaInteressadosTopicoRequest() {
+        return new PesquisaInteressadosTopicoRequest();
+    }
+
+    /**
+     * Create an instance of {@link PesquisaInteressadosTopicoResponse }
+     * 
+     */
+    public PesquisaInteressadosTopicoResponse createPesquisaInteressadosTopicoResponse() {
+        return new PesquisaInteressadosTopicoResponse();
+    }
+
+    /**
      * Create an instance of {@link IncluirUsuarioRequest }
      * 
      */
