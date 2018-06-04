@@ -6,19 +6,19 @@
 
 <%@include file="/WEB-INF/shared/header.jsp" %>
 
-<div class="ui middle aligned center aligned grid">
-  <div class="column">
-    <h2 class="ui teal image header">
+<div class="ui middle aligned center aligned grid animated fadeInDown">
+  <div class="column" id="boxLogin">
+    <h2 class="ui primary image header">
       <div class="content">
-        Log-in to your account
+        BatePapoApp
       </div>
     </h2>
     <form class="ui large form">
-      <div class="ui stacked segment">
+      <div class="ui segment">
         <div class="field">
           <div class="ui left icon input">
             <i class="user icon"></i>
-            <input type="text" name="email" placeholder="E-mail address">
+            <input type="text" name="email" placeholder="E-mail address" autofocus>
           </div>
         </div>
         <div class="field">
@@ -27,31 +27,13 @@
             <input type="password" name="password" placeholder="Password">
           </div>
         </div>
-        <div class="ui fluid large teal submit button">Login</div>
+        <div class="ui fluid large primary submit button">Entrar</div>
       </div>
 
       <div class="ui error message"></div>
 
     </form>
-
-    <div class="ui message">
-      New to us? <a href="#">Sign Up</a>
-    </div>
   </div>
 </div>
-<style type="text/css">
-    body {
-        background-color: #DADADA;
-    }
-    body > .grid {
-        height: 100%;
-    }
-    .image {
-        margin-top: -100px;
-    }
-    .column {
-        max-width: 450px;
-    }
-</style>
 
 <%@include file="/WEB-INF/shared/footer.jsp" %>

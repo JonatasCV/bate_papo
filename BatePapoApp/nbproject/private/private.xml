@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/developer/NetBeansProjects/BatePapoApp/src/java/br/com/batepapoapp/controller/HomeController.java</file>
-            <file>file:/Users/developer/NetBeansProjects/BatePapoApp/web/WEB-INF/jsp/home.jsp</file>
-            <file>file:/Users/developer/NetBeansProjects/BatePapoApp/web/WEB-INF/dispatcher-servlet.xml</file>
+            <file>file:/Users/developer/Projects/test/bate_papo/BatePapoApp/web/resources/stylesheet/style.css</file>
+            <file>file:/Users/developer/Projects/test/bate_papo/BatePapoApp/web/WEB-INF/shared/header.jsp</file>
+            <file>file:/Users/developer/Projects/test/bate_papo/BatePapoApp/src/java/br/com/batepapoapp/controller/HomeController.java</file>
+            <file>file:/Users/developer/Projects/test/bate_papo/BatePapoApp/web/WEB-INF/jsp/login.jsp</file>
         </group>
     </open-files>
 </project-private>
