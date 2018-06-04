@@ -27,10 +27,44 @@
       })
     ;
 
+    // $('#content')
+    //   .on('swipe')
+    // ;
+
     $('button')
       .on('click', (e) => {
-        $('#content').slick(`${$(e.target).attr('data-action')}`);
+        $('#content').slick(`${$(e.currentTarget).attr('data-action')}`);
+
+        switch ($('.slick-active .header .content').text().trim()){
+          case 'Chats':
+            $('#left span').text('Tópicos');
+            $('#right span').text('Acessos');
+            break;
+          case 'Acessos':
+            $('#left span').text('Chats');
+            $('#right span').text('Tópicos');
+            break;
+          case 'Tópicos':
+            $('#left span').text('Acessos');
+            $('#right span').text('Chats');
+            break;
+        }
       });
+    ;
+
+    $(window)
+      .on('load', () => {
+
+        $('#chats').addClass('loading');
+
+        $.post('/chats', {filter: ''}, (data) => {
+
+          $('#chats .number').text(data.qtChats);
+
+          $('#chats').removeClass('loading');
+        });
+
+      })
     ;
   </script>
 </html>
