@@ -1,7 +1,9 @@
 package udp;
 
 import dataBase.dao.UsuarioDAO;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -41,6 +43,8 @@ public class Servidor {
             soc.receive(pct);
             
             String str = new String(pct.getData());
+            
+            
             
             if (str.equals("!shutdown")) {
                 str = "!server_shutdown";
@@ -86,18 +90,34 @@ public class Servidor {
                 InserirAcessoRequest requestAcesso = new InserirAcessoRequest();
                 requestAcesso.setCodUsuario(usuario.getCodUsuario());
                 InserirAcessoResponse responseAcesso = port.inserirAcesso(requestAcesso);
+                // Enviando resposta instanciando pacote 
+                
+                
+                
+                byte[] buf = new byte[1024]; 
+                
+                //Converte objeto de reposta para byte
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                ObjectOutputStream os = new ObjectOutputStream(outputStream);
+                os.writeObject(usuario);
+                buf = outputStream.toByteArray();
+                
+                DatagramPacket resposta = new DatagramPacket(buf, buf.length, pctTopicos.getAddress(), pctTopicos.getPort());
+                soc.send(resposta);
+                
             } else {
-                str = "Usuário inexistente!";
-                msg = str.getBytes();                
-                pct.setData(msg);
-                pct.setLength(msg.length);
-                pct.setAddress(addr);
-                pct.setPort(PORTA);
-//                pct = new DatagramPacket(msg, msg.length, addr, PORT_ENV);
                 System.out.println("Usuario nao existe");
-
-                soc = new DatagramSocket();
-                soc.send(pct);
+                
+                byte[] buf = new byte[1024]; 
+                
+                //Converte objeto de reposta para byte
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                ObjectOutputStream os = new ObjectOutputStream(outputStream);
+                os.writeObject(new Usuario());
+                buf = outputStream.toByteArray();
+                
+                DatagramPacket resposta = new DatagramPacket(buf, buf.length, pct.getAddress(), pct.getPort());
+                soc.send(resposta);
             }
         }
 

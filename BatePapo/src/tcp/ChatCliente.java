@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package udp;
+package tcp;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -15,6 +15,7 @@ import java.net.Socket;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import ws.Usuario;
 
 /**
@@ -22,14 +23,23 @@ import ws.Usuario;
  * @author eduardozanela
  */
 public class ChatCliente extends javax.swing.JFrame {
-
+    
+    private Usuario user;
+    
     /**
      * Creates new form NewJFrame
      */
     public ChatCliente() {
         initComponents();
     }
-
+    
+    public ChatCliente(Usuario user) {
+        initComponents();
+        this.user = user;
+        this.userName.setText(user.getNome());
+        this.ipUser.setText(user.getIPaddress());
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -51,6 +61,10 @@ public class ChatCliente extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jTextField1 = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        userName = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        ipUser = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,10 +103,7 @@ public class ChatCliente extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Nome", "Endereço Ip"
@@ -119,6 +130,10 @@ public class ChatCliente extends javax.swing.JFrame {
 
         jTextField1.setText("jTextField1");
 
+        jLabel4.setText("Usuario:");
+
+        jLabel5.setText("Ip:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -143,17 +158,38 @@ public class ChatCliente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel1)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(userName))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(ipUser)))
+                .addGap(212, 212, 212))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(userName))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(ipUser))))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -177,7 +213,8 @@ public class ChatCliente extends javax.swing.JFrame {
         try {
             int index = this.topicos.getSelectedIndex() + 1;
             System.out.println("Selecionado " + index + " texto: " + this.topicos.getSelectedItem().toString());
-            findUsers(index);
+            List<Usuario> usuarios = findUsersTest(index);
+            addRowToTable(usuarios);
         } catch (IOException ex) {
             Logger.getLogger(ChatCliente.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -185,25 +222,35 @@ public class ChatCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_pesquisarActionPerformed
     
-    private void findUsers(int index) throws IOException, ClassNotFoundException{
-        System.out.println("finding users " + index);
+   
+    private List<Usuario> findUsersTest(int index) throws IOException, ClassNotFoundException{
+        Socket socket = new Socket("localhost", 2020);
         
-        String modifiedSentence;
+        // Pega o fluxo de saida e escreve (manda para o server)
+        ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
+        output.writeInt(index);
+        output.flush();
+        output.writeInt(index);
         
-        Socket clientSocket = new Socket("localhost", 6789);
+        //Recebe resposta
+        ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
+        List<Usuario> resposta = (List<Usuario>)input.readObject();
+        System.out.println("Recebido: " + resposta.size());
         
-        DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
-        outToServer.writeBytes(""+index);
+        socket.close();
         
-        ObjectInputStream inStream = new ObjectInputStream(clientSocket.getInputStream());
-
-        Usuario student = (Usuario) inStream.readObject();
-
-
+        return resposta;
+    }
+    
+    private void addRowToTable(List<Usuario> usuarios){
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        Object rowData[] = new Object[2];
+        for(int i=0; i < usuarios.size(); i++) {
+            rowData[0] = usuarios.get(i).getNome();
+            rowData[1] = usuarios.get(i).getIPaddress();
+            model.addRow(rowData);
+        }
         
-        Usuario usuarios = (Usuario) inStream.readObject();
-        System.out.println("size: " + usuarios.getNome());
-        //clientSocket.close();
     }
     
     /**
@@ -243,9 +290,12 @@ public class ChatCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ipUser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -255,5 +305,6 @@ public class ChatCliente extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JButton pesquisar;
     private javax.swing.JComboBox<String> topicos;
+    private javax.swing.JLabel userName;
     // End of variables declaration//GEN-END:variables
 }

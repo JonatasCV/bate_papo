@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 import ws.PesquisaInteressadosTopicoRequest;
 import ws.PesquisaInteressadosTopicoResponse;
@@ -19,40 +21,44 @@ public class server {
 
     private static final String HOST = "localhost";
     private static final int PORTA   = 9876;
+    private static UsuariosPortService usuarioPortService = new UsuariosPortService();
+    private static UsuariosPort port = usuarioPortService.getUsuariosPortSoap11();
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         System.out.println("Servidor");
         
-        UsuariosPortService usuarioPortService = new UsuariosPortService();
-        UsuariosPort port;
-        port = usuarioPortService.getUsuariosPortSoap11();
+        // Criando server socket
+        ServerSocket ss = new ServerSocket(2020);
+        System.out.println("Servidor iniciado na porta 3322 + " + InetAddress.getLocalHost());
         
-        int pesquisaTopicoId;
-        ServerSocket welcomeSocket = new ServerSocket(6789);
-
-        while (true) {
-            Socket connectionSocket = welcomeSocket.accept();
+        while(true){
+            //Cria um socket quando recebe coneção
+            Socket socket = ss.accept();
             
-            //ObjectOutputStream os = new ObjectOutputStream(connectionSocket.getOutputStream());
-            BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-
-            pesquisaTopicoId = Integer.parseInt(inFromClient.readLine());
+            //Cria um fluxo de input
+            ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
+             
+            
+            int pesquisaTopicoId = input.readInt();
+            System.out.println("Recebido: " + pesquisaTopicoId); 
+            
             PesquisaInteressadosTopicoRequest pesquisaRequest = new PesquisaInteressadosTopicoRequest();
             pesquisaRequest.setIdTopico(pesquisaTopicoId);
             PesquisaInteressadosTopicoResponse responseTopicos = port.pesquisaInteressadosTopico(pesquisaRequest);
+            
             List<Usuario> usuarios = responseTopicos.getUsuarios();
-            System.out.println("Received: " + pesquisaTopicoId);
             System.out.println("Size: " + usuarios.size());
             
             for(Usuario user : usuarios){
-                System.out.println("User Ip: " + user.getIPaddress());
+                System.out.println("Usuario: " + user.getNome() + " endereço ip: " + user.getIPaddress());
             }
+            //Envia resposta
+            ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
+            String resposta = "chegou";
+            output.writeObject(usuarios);
+            output.flush();
             
-            ObjectOutputStream outputStream = new ObjectOutputStream(connectionSocket.getOutputStream());
-            System.out.println("Object to be written = " + usuarios.size());
-            outputStream.writeObject(usuarios.get(0));
-            
-            
+            socket.close();
         }
     }
     

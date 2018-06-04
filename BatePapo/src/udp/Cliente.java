@@ -1,12 +1,18 @@
 package udp;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import tcp.ChatCliente;
+import ws.Usuario;
 
 public class Cliente extends javax.swing.JFrame {
 
@@ -235,6 +241,27 @@ public class Cliente extends javax.swing.JFrame {
             pct = new DatagramPacket(msg, msg.length, addr, PORTA); 
             soc.send(pct);
             
+            byte[] receiveBuf = new byte[256];
+            
+             //Create a response DatagramPacket and wait for server response
+            DatagramPacket receivePacket = new DatagramPacket(receiveBuf, receiveBuf.length);
+            soc.receive(receivePacket);
+            
+            //Read and convert response to UDPReponse
+            ByteArrayInputStream in = new ByteArrayInputStream(receivePacket.getData());
+            ObjectInputStream is = new ObjectInputStream(in);
+            Usuario response = (Usuario) is.readObject();
+            
+            System.out.println("Usuario " + response.getNome());
+            
+            if(response.getNome() != null){
+                this.setVisible(false);
+                new ChatCliente(response).setVisible(true);
+            } else {
+                 JOptionPane.showMessageDialog(null, "Usuario não encontrado");
+                return;
+            }
+            
             // recebe do server os users disponiveis para conversa nos topicos escolhidos
             
             soc.close();
@@ -244,6 +271,8 @@ public class Cliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro na conexão com o servidor!");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro no envio das mensagens ao servidor!");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnOkActionPerformed
 
