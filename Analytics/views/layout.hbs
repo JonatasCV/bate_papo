@@ -4,6 +4,7 @@
     <title>{{title}}</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/semantic.min.css' />
+    <link rel='stylesheet' href='/stylesheets/calendar.min.css' />
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,400" rel="stylesheet">
   </head>
@@ -14,9 +15,40 @@
     <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script type="text/javascript" src="/javascripts/semantic.min.js"></script>
+    <script type="text/javascript" src="/javascripts/calendar.min.js"></script>
     <script type="text/javascript" src="/javascripts/jquery.animateNumber.min.js"></script>
   </body>
   <script>
+
+    let filtering = false;
+    let filterString = '';
+
+    $('#filter').calendar({
+      type: 'date',
+      today: true,
+      monthFirst: false,
+      text: {
+        months: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '12']
+      },
+      onChange: (date, text, mode) => {
+        if(filtering === false){
+
+          let dataInicial = text.split(' ');
+          dataInicial[0].toFixed(2);
+
+          filtering = {
+            dataInicial: text.split(' '),
+            dataFinal: ''
+          }
+
+          console.log(filtering.dataInicial);
+
+        }
+
+        $('#filter').click();
+      }
+    })
+
     $(document)
       .ready(() => {
 
@@ -207,23 +239,27 @@
 
         stopLoading($('#chats'));
 
-        console.log(data.chatsUser);
-
         $('#chats .number').animateNumber({number: data.chats.qtChats});
 
+        let chats = [];
+
         data.chatsUser.map((x, i) => {
-          $('.chatUsers .list').html(
-            $('.chatUsers .list').html() + `
-              <div class="item">
-                <div class="header" style="color: #FFF;">${x.nomeUsuario}</div>
-                <span></span>
-              </div>
-            `
-          );
+          if(x.cont > 0) {
+            chats.push({i});
+
+            $('.chatUsers .list').html(
+              $('.chatUsers .list').html() + `
+                <div class="item">
+                  <div class="header" style="color: #FFF;">${x.nomeUsuario}</div>
+                  <span></span>
+                </div>
+              `
+            );
+          }
         });
 
         $.each($('.item span'), (i, x) => {
-          $(x).animateNumber({number: data.chatsUser[i].cont});
+          $(x).animateNumber({number: data.chatsUser[chats[i].i].cont});
         });
       });
     }

@@ -6,6 +6,7 @@ body{
   font-family: 'Montserrat', sans-serif !important;
   width: 100%;
   overflow: hidden;
+  outline: none !important;
 
 
   -webkit-touch-callout: none; /* iOS Safari */
@@ -125,7 +126,7 @@ button {
 .chatUsers{
   color: #FFF;
   font-weight: 100 !important;
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: 400px;
 }
 
@@ -133,6 +134,11 @@ h2{
   color: #FFF;
   font-weight: 100 !important;
   font-size: 40px;
+}
+
+#calendar{
+  position: absolute;
+  top: 0;
 }
 
 /* Safari */

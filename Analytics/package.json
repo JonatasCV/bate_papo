@@ -14,6 +14,7 @@
     "http-errors": "~1.6.2",
     "morgan": "~1.9.0",
     "nodemon": "^1.17.5",
-    "request": "^2.87.0"
+    "request": "^2.87.0",
+    "semantic-ui-calendar": "0.0.8"
   }
 }
