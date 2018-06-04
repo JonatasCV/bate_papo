@@ -5,6 +5,7 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/semantic.min.css' />
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,400" rel="stylesheet">
   </head>
   <body>
     {{{body}}}
@@ -24,6 +25,12 @@
         });
 
       })
+    ;
+
+    $('button')
+      .on('click', (e) => {
+        $('#content').slick(`${$(e.target).attr('data-action')}`);
+      });
     ;
   </script>
 </html>

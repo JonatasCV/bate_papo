@@ -1,3 +1,18 @@
+body{
+  background: #1e3c72 !important;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #2a5298, #1e3c72) !important;  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #2a5298, #1e3c72) !important; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+
+
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+#content {
+  height: 100vh;
+}
+
 #arrows button{
   position: absolute;
   margin: 32px;
@@ -10,8 +25,18 @@
 
 h1{
   margin: 32px !important;
+  color: #FFF !important;
+  font-weight: 100 !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 64px !important;
 }
 
-h1 .content{
-  font-size: 48px !important;
+button {
+  background: transparent;
+  border: 0;
+  color: #FFF;
+  font-weight: 100 !important;
+  font-size: 28px !important;
+  cursor: pointer;
+  outline: none;
 }
