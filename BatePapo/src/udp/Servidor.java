@@ -36,7 +36,8 @@ public class Servidor {
         UsuariosPort port;
         
         port = usuarioPortService.getUsuariosPortSoap11();
-
+        System.out.println(usuarioPortService.getUsuariosPortSoap11());
+        
         while (true) {
             msg = new byte[MSG_SIZE];
             pct = new DatagramPacket(msg, msg.length);
@@ -65,11 +66,11 @@ public class Servidor {
             System.out.println("Ola: " + str);
             BuscarUsuarioPorNomeResponse response = port.buscarUsuarioPorNome(request);
             Usuario usuario = response.getUsuario();
-            System.out.println("Ola: " + response.getUsuario().getNome() + " id: " + response.getUsuario().getCodUsuario());
             
             List<Long> topicosInterese = new ArrayList<>();
             
             if (usuario.getNome() != null) { // pesquisa o usuario no banco de dados
+                //System.out.println("Ola: " + response.getUsuario().getNome() + " id: " + response.getUsuario().getCodUsuario());
                 byte topicos[] = new byte[MSG_SIZE];
                 String message = "";
                 DatagramPacket pctTopicos = new DatagramPacket(topicos, topicos.length);

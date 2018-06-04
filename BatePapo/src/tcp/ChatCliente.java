@@ -244,6 +244,11 @@ public class ChatCliente extends javax.swing.JFrame {
     
     private void addRowToTable(List<Usuario> usuarios){
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        int rowCount = model.getRowCount();
+        //Remove rows one by one from the end of the table
+        for (int i = rowCount - 1; i >= 0; i--) {
+            model.removeRow(i);
+        }
         Object rowData[] = new Object[2];
         for(int i=0; i < usuarios.size(); i++) {
             rowData[0] = usuarios.get(i).getNome();

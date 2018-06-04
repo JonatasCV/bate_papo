@@ -11,6 +11,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import ws.InserirPesquisaRequest;
 import ws.PesquisaInteressadosTopicoRequest;
 import ws.PesquisaInteressadosTopicoResponse;
 import ws.Usuario;
@@ -45,6 +46,10 @@ public class server {
             PesquisaInteressadosTopicoRequest pesquisaRequest = new PesquisaInteressadosTopicoRequest();
             pesquisaRequest.setIdTopico(pesquisaTopicoId);
             PesquisaInteressadosTopicoResponse responseTopicos = port.pesquisaInteressadosTopico(pesquisaRequest);
+            
+            InserirPesquisaRequest inserirPesquisaRequest = new InserirPesquisaRequest();
+            inserirPesquisaRequest.setTopico(pesquisaTopicoId);
+            port.inserirPesquisa(inserirPesquisaRequest);
             
             List<Usuario> usuarios = responseTopicos.getUsuarios();
             System.out.println("Size: " + usuarios.size());
