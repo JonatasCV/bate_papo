@@ -31,7 +31,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="txtNomeUser" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="jPanel1" alignment="0" min="-2" pref="365" max="-2" attributes="0"/>
+                  <Component id="jPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="0" pref="10" max="32767" attributes="0"/>
@@ -93,7 +93,7 @@
                       <Component id="chk3" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="chk4" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="29" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="chk5" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="chk6" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -138,9 +138,6 @@
             <Property name="text" type="java.lang.String" value="Elei&#xe7;&#xf5;es 2018"/>
             <Property name="name" type="java.lang.String" value="chk1" noResource="true"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chk1ActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JCheckBox" name="chk2">
           <Properties>
