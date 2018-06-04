@@ -8,5 +8,5 @@ import br.com.batepapo.batepapouserssoapwebservices.entity.PesquisaKey;
 
 @Repository
 public interface PesquisaRepository extends CrudRepository<Pesquisa, PesquisaKey>{
-
+	
 }

@@ -49,12 +49,45 @@
         </xs:complexType>
     </xs:element>
     
+    <xs:element name="buscarUsuarioPorNomeRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="nome" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="buscarUsuarioPorNomeResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="usuario" type="tns:Usuario"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
     <xs:element name="todosUsuarioRequest" />
    
    <xs:element name="todosUsuarioResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="usuario" type="tns:Usuario" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="loginTopicosInteresseRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codUsuario" type="xs:long"/>
+                <xs:element name="topicos" type="xs:long" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="loginTopicosInteresseResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="status" type="xs:boolean"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

@@ -1,36 +1,31 @@
 package tcp;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
+import java.io.InputStreamReader;
 import java.net.Socket;
 
 public class client {
 
     private static final String HOST = "localhost";
-    private static final int PORTA   = 998877;
+    private static final int PORTA   = 9876;
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         System.out.println("Cliente");
-        ServerSocket ss = new ServerSocket(PORTA);
-        Socket soc      = new Socket(HOST, PORTA);
-        String msg      = new String("Oi");
-
-        ObjectInputStream  objIn  = new ObjectInputStream(soc.getInputStream());
-        ObjectOutputStream objOut = new ObjectOutputStream(soc.getOutputStream());
-
-        objOut.writeObject(msg);
-        objOut.flush();
-        System.out.println("Mensagem enviada.");
-        objOut.close();
         
-        soc = ss.accept();
-
-        msg = (String) objIn.readObject();
-        System.out.println("Recebido: " + msg);
-        soc.close();
-        ss.close();
+        String sentence;
+        String modifiedSentence;
+        
+        BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
+        Socket clientSocket = new Socket("localhost", 6789);
+        DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
+        BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        sentence = inFromUser.readLine();
+        outToServer.writeBytes(sentence + '\n');
+        modifiedSentence = inFromServer.readLine();
+        System.out.println("FROM SERVER: " + modifiedSentence);
+        clientSocket.close();
     }
     
 }
