@@ -1,8 +1,17 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+#arrows button{
+  position: absolute;
+  margin: 32px;
+  bottom: 0;
 }
 
-a {
-  color: #00B7FF;
+#arrows button.right{
+  right: 0;
+}
+
+h1{
+  margin: 32px !important;
+}
+
+h1 .content{
+  font-size: 48px !important;
 }
