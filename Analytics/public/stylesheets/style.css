@@ -5,6 +5,7 @@ body{
 
   font-family: 'Montserrat', sans-serif !important;
   width: 100%;
+  overflow: hidden;
 
 
   -webkit-touch-callout: none; /* iOS Safari */
@@ -64,6 +65,42 @@ button {
   color: #FFF;
 }
 
-.segment{
-  background: transparent !important;
+.loading {
+  transform: translateX(-50%) translateY(-50%);
+  border: 2px solid #FFF;
+  border-radius: 100%;
+  border-top: 2px solid transparent;
+  width: 64px;
+  height: 64px;
+  position: relative;
+  bottom: 24px;
+  left: 15px;
+
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin .8s linear infinite;
+}
+
+.hide {
+  display: none;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

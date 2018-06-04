@@ -14,6 +14,7 @@
     <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script type="text/javascript" src="/javascripts/semantic.min.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery.animateNumber.min.js"></script>
   </body>
   <script>
     $(document)
@@ -27,9 +28,24 @@
       })
     ;
 
-    // $('#content')
-    //   .on('swipe')
-    // ;
+    $('#content')
+      .on('swipe', (event, slick, direction) => {
+        switch (slick.currentSlide){
+          case 0:
+            $('#left span').text('Tópicos');
+            $('#right span').text('Acessos');
+            break;
+          case 1:
+            $('#left span').text('Chats');
+            $('#right span').text('Tópicos');
+            break;
+          case 2:
+            $('#left span').text('Acessos');
+            $('#right span').text('Chats');
+            break;
+        }
+      })
+    ;
 
     $('button')
       .on('click', (e) => {
@@ -55,16 +71,26 @@
     $(window)
       .on('load', () => {
 
-        $('#chats').addClass('loading');
+        $('#loading').removeClass('hide');
+
+        startLoading($('#chats'));
 
         $.post('/chats', {filter: ''}, (data) => {
 
-          $('#chats .number').text(data.qtChats);
+          stopLoading($('#chats'));
 
-          $('#chats').removeClass('loading');
+          $('#chats .number').animateNumber({number: data.qtChats});
         });
 
       })
     ;
+
+    function startLoading(el){
+      el.html('<div class="loading"></div>');
+    }
+
+    function stopLoading(el){
+      el.html('<span class="number"></span>');
+    }
   </script>
 </html>
