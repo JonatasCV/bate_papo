@@ -33,15 +33,18 @@
         switch (slick.currentSlide){
           case 0:
             $('#left span').text('Tópicos');
-            $('#right span').text('Acessos');
+            $('#right span').text('Acessos de usuários');
             break;
+            requestChats();
           case 1:
-            $('#left span').text('Chats');
+            $('#left span').text('Chats realizados');
             $('#right span').text('Tópicos');
+            requestAcessos();
             break;
           case 2:
-            $('#left span').text('Acessos');
-            $('#right span').text('Chats');
+            $('#left span').text('Acessos de usuários');
+            $('#right span').text('Chats realizados');
+            requestTopicos();
             break;
         }
       })
@@ -52,17 +55,20 @@
         $('#content').slick(`${$(e.currentTarget).attr('data-action')}`);
 
         switch ($('.slick-active .header .content').text().trim()){
-          case 'Chats':
+          case 'Chats realizados':
             $('#left span').text('Tópicos');
-            $('#right span').text('Acessos');
+            $('#right span').text('Acessos de usuários');
+            requestChats();
             break;
-          case 'Acessos':
-            $('#left span').text('Chats');
+          case 'Acessos de usuários':
+            $('#left span').text('Chats realizados');
             $('#right span').text('Tópicos');
+            requestAcessos();
             break;
           case 'Tópicos':
-            $('#left span').text('Acessos');
-            $('#right span').text('Chats');
+            $('#left span').text('Acessos de usuários');
+            $('#right span').text('Chats realizados');
+            requestTopicos();
             break;
         }
       });
@@ -71,17 +77,9 @@
     $(window)
       .on('load', () => {
 
-        $('#loading').removeClass('hide');
+        $('#filter span').text('01/01/2018 - 13/05/2018');
 
-        startLoading($('#chats'));
-
-        $.post('/chats', {filter: ''}, (data) => {
-
-          stopLoading($('#chats'));
-
-          $('#chats .number').animateNumber({number: data.qtChats});
-        });
-
+        requestChats();
       })
     ;
 
@@ -90,7 +88,179 @@
     }
 
     function stopLoading(el){
-      el.html('<span class="number"></span>');
+      el.html(`
+        <div class="ui grid">
+          <div class="ui column eight wide">
+            <span class="number"></span>
+          </div>
+          <div class="ui column eight wide">
+            <div class="chatUsers">
+              <div class="ui massive list"></div>
+            </div>
+          </div>
+        </div>`
+      );
     }
+
+    function stopLoadingTopicos(el){
+      el.html(`
+        <div class="ui grid">
+          <div class="ui column eight wide">
+            <div class="numberTopicos ui massive list">
+              <div class="item">
+                <i class="ui icon car"></i>
+                <div class="content">
+                  <div class="header">
+                    Multas de trânsito
+                  </div>
+                  <span class="contagem"></span>
+                  <span class="posfix"></span>
+                </div>
+              </div>
+              <div class="item">
+                <i class="ui icon ambulance"></i>
+                <div class="content">
+                  <div class="header">
+                    Sistema nacional de saúde
+                  </div>
+                  <span class="contagem"></span>
+                  <span class="posfix"></span>
+                </div>
+              </div>
+              <div class="item">
+                <i class="ui icon dollar sign"></i>
+                <div class="content">
+                  <div class="header">
+                    Preço da gasolina
+                  </div>
+                  <span class="contagem"></span>
+                  <span class="posfix"></span>
+                </div>
+              </div>
+              <div class="item">
+                <i class="ui icon shield alternate"></i>
+                <div class="content">
+                  <div class="header">
+                    Segurança pública
+                  </div>
+                  <span class="contagem"></span>
+                  <span class="posfix"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ui column eight wide">
+            <div class="numberTopicos ui massive list">
+              <div class="item">
+                <i class="ui icon graduation cap"></i>
+                <div class="content">
+                  <div class="header">
+                    Educação
+                  </div>
+                  <span class="contagem"></span>
+                  <span class="posfix"></span>
+                </div>
+              </div>
+              <div class="item">
+                <i class="ui icon heart outline"></i>
+                <div class="content">
+                  <div class="header">
+                    Traição
+                  </div>
+                  <span class="contagem"></span>
+                  <span class="posfix"></span>
+                </div>
+              </div>
+              <div class="item">
+                <i class="ui icon blind"></i>
+                <div class="content">
+                  <div class="header">
+                    Aposentadoria
+                  </div>
+                  <span class="contagem"></span>
+                  <span class="posfix"></span>
+                </div>
+              </div>
+              <div class="item">
+                <i class="ui icon user circle"></i>
+                <div class="content">
+                  <div class="header">
+                    Eleições 2018
+                  </div>
+                  <span class="contagem"></span>
+                  <span class="posfix"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `);
+    }
+
+    function requestChats(){
+
+      $('#loading').removeClass('hide');
+
+      startLoading($('#chats'));
+
+      $.post('/chats', {dataInicial: getFilter().dataInicial, dataFinal: getFilter().dataFinal}, (data) => {
+
+        stopLoading($('#chats'));
+
+        console.log(data.chatsUser);
+
+        $('#chats .number').animateNumber({number: data.chats.qtChats});
+
+        data.chatsUser.map((x, i) => {
+          $('.chatUsers .list').html(
+            $('.chatUsers .list').html() + `
+              <div class="item">
+                <div class="header" style="color: #FFF;">${x.nomeUsuario}</div>
+                <span></span>
+              </div>
+            `
+          );
+        });
+
+        $.each($('.item span'), (i, x) => {
+          $(x).animateNumber({number: data.chatsUser[i].cont});
+        });
+      });
+    }
+
+    function requestAcessos(){
+
+      startLoading($('#acessos'));
+
+      $.post('/acessos', {dataInicial: getFilter().dataInicial, dataFinal: getFilter().dataFinal}, (data) => {
+
+        stopLoading($('#acessos'));
+
+        $('#acessos .number').animateNumber({number: data.qtAcessos});
+      });
+    }
+
+    function requestTopicos(){
+
+      startLoading($('#topicos'));
+
+      $.post('/topicos', {dataInicial: getFilter().dataInicial, dataFinal: getFilter().dataFinal}, (data) => {
+
+        stopLoadingTopicos($('#topicos'));
+
+        $.each($('.item .contagem'), (i, x) => {
+          $(x).animateNumber({number: data[i].contagem});
+          $($(x).context.nextElementSibling).text(data[i].contagem > 1 ? 'conversas' : 'conversa');
+        });
+      });
+    }
+
+    function getFilter(){
+      return {
+        dataInicial: $('#filter span').text().split('-')[0].trim().replace(new RegExp('/', 'g'), '-') + ' 00:00:00',
+        dataFinal: $('#filter span').text().split('-')[1].trim().replace(new RegExp('/', 'g'), '-') + ' 23:59:59'
+      }
+    }
+
   </script>
 </html>

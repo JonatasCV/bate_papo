@@ -10,9 +10,54 @@ router.get('/', function(req, res, next) {
 
 router.post('/chats', (req, res) => {
 
+  console.log(req.body);
+
   request.get({
       uri: 'https://batepaporest.herokuapp.com/chats-realizados',
-      form: {filter: ''}
+      form: {
+        dataInicial: req.body.dataInicial,
+        dataFinal: req.body.dataFinal
+      }
+    },
+    (err, requestRes, body) => {
+
+      request.get({
+        uri: 'https://batepaporest.herokuapp.com/chats-por-usuario',
+          form: {
+            dataInicial: req.body.dataInicial,
+            dataFinal: req.body.dataFinal
+          }
+      },
+      (errr, requestRess, bodyy) => {
+
+        res.send({chats: JSON.parse(body), chatsUser: JSON.parse(bodyy)});
+
+      });
+    });
+});
+
+router.post('/acessos', (req, res) => {
+
+  request.get({
+      uri: 'https://batepaporest.herokuapp.com/usuarios-acessos-rede',
+      form: {
+        dataInicial: req.body.dataInicial,
+        dataFinal: req.body.dataFinal
+      }
+    },
+    (err, requestRes, body) => {
+      res.send(JSON.parse(body));
+    });
+});
+
+router.post('/topicos', (req, res) => {
+
+  request.get({
+      uri: 'https://batepaporest.herokuapp.com/topicos-mais-acessados',
+      form: {
+        dataInicial: req.body.dataInicial,
+        dataFinal: req.body.dataFinal
+      }
     },
     (err, requestRes, body) => {
       res.send(JSON.parse(body));
