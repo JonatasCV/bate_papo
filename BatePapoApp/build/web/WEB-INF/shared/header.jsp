@@ -12,6 +12,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>BatePapoApp</title>
         <link href="<c:url value="/resources/stylesheet/semantic.min.css"/>" rel="stylesheet">
+        <link href="<c:url value="/resources/stylesheet/animated.css"/>" rel="stylesheet">
+        <link href="<c:url value="/resources/stylesheet/style.css"/>" rel="stylesheet">
         <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
