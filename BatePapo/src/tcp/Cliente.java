@@ -187,7 +187,8 @@ public class Cliente extends javax.swing.JFrame {
             userSelected = obj;
         }
         
-        System.out.println("Usuario selecionado: " + userSelected.getNome());
+        this.setVisible(false);
+        new tcp.Chat(userLogged, userSelected).setVisible(true);        
     }//GEN-LAST:event_btnConversaActionPerformed
     
    

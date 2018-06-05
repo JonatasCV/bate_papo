@@ -1,10 +1,15 @@
 package tcp;
 
-import java.util.List;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import ws.Usuario;
 
 public class Chat extends javax.swing.JFrame {
 
+    private static final int PORTA = 3000;
+    private static Usuario userLocal, userRemote;    
+    
     /**
      * Creates new form Chat
      */
@@ -12,6 +17,13 @@ public class Chat extends javax.swing.JFrame {
         initComponents();
     }
     
+    public Chat(Usuario user1, Usuario user2) {
+        initComponents();
+        
+        userLocal  = user1;
+        userRemote = user2;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,6 +48,11 @@ public class Chat extends javax.swing.JFrame {
         jScrollPane2.setViewportView(txtChat);
 
         btnEnviar.setText("Enviar");
+        btnEnviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -72,6 +89,21 @@ public class Chat extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
+        try {
+            String msg = txtMessage.getText();
+            
+            if (!msg.isEmpty()) {            
+                Sender env = new Sender(userRemote.getIPaddress(), PORTA);
+                txtChat.append("/nEu: " + msg);
+                env.send(msg);
+            }
+        } catch (IOException ex) {
+            System.out.println("Erro no envio da mensagem!");
+            Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnEnviarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -103,15 +135,27 @@ public class Chat extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Chat().setVisible(true);
+                try {
+                    new Chat().setVisible(true);
+                    
+                    Receiver rec = new Receiver(PORTA);
+                    rec.start();
+                } catch (IOException ex) {
+                    System.out.println("Erro no recebimento de uma mensagem!");
+                    Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
+    }
+    
+    public static void recebeMsg(String msg) {
+        txtChat.append("/n" + userLocal.getNome() + ": " + msg);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEnviar;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea txtChat;
+    private static javax.swing.JTextArea txtChat;
     private javax.swing.JTextField txtMessage;
     // End of variables declaration//GEN-END:variables
 }
