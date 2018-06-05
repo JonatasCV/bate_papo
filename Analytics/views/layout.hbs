@@ -27,25 +27,54 @@
       type: 'date',
       today: true,
       monthFirst: false,
-      text: {
-        months: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '12']
+      formatter: {
+        date: function (date, settings) {
+          if (!date) return '';
+          var day = date.getDate() + '';
+          if (day.length < 2) {
+              day = '0' + day;
+          }
+          var month = (date.getMonth() + 1) + '';
+          if (month.length < 2) {
+              month = '0' + month;
+          }
+          var year = date.getFullYear();
+
+          return day + '/' + month + '/' + year;
+        }
       },
       onChange: (date, text, mode) => {
         if(filtering === false){
 
-          let dataInicial = text.split(' ');
-          dataInicial[0].toFixed(2);
-
           filtering = {
-            dataInicial: text.split(' '),
+            dataInicial: text,
             dataFinal: ''
+          };
+
+        }else{
+          filtering.dataFinal = text;
+
+          $('#filter span').text(filtering.dataInicial + ' - ' + filtering.dataFinal);
+
+          filtering = false;
+
+          switch ($('.slick-active .header .content').text().trim()){
+            case 'Chats realizados':
+              requestChats();
+              break;
+            case 'Acessos de usuários':
+              requestAcessos();
+              break;
+            case 'Tópicos':
+              requestTopicos();
+              break;
           }
-
-          console.log(filtering.dataInicial);
-
         }
-
-        $('#filter').click();
+      },
+      onHide: () => {
+        if(filtering !== false) {
+          $('#filter').trigger('click');
+        }
       }
     })
 

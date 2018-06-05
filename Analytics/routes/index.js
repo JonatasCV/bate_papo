@@ -5,12 +5,10 @@ var request = require('request');
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Analytics' });
 });
 
 router.post('/chats', (req, res) => {
-
-  console.log(req.body);
 
   request.get({
       uri: 'https://batepaporest.herokuapp.com/chats-realizados',
