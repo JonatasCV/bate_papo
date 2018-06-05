@@ -1,14 +1,17 @@
 package tcp;
 
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import ws.Usuario;
 
 public class Chat extends javax.swing.JFrame {
 
     private static final int PORTA = 3000;
     private static Usuario userLocal, userRemote;    
+    private static Receiver rec;
     
     /**
      * Creates new form Chat
@@ -41,11 +44,22 @@ public class Chat extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Chat");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         txtChat.setEditable(false);
         txtChat.setColumns(20);
         txtChat.setRows(5);
         jScrollPane2.setViewportView(txtChat);
+
+        txtMessage.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtMessageKeyPressed(evt);
+            }
+        });
 
         btnEnviar.setText("Enviar");
         btnEnviar.addActionListener(new java.awt.event.ActionListener() {
@@ -95,14 +109,33 @@ public class Chat extends javax.swing.JFrame {
             
             if (!msg.isEmpty()) {            
                 Sender env = new Sender(userRemote.getIPaddress(), PORTA);
-                txtChat.append("/nEu: " + msg);
+                txtChat.append("\nEu: " + msg);
                 env.send(msg);
             }
+            
+            txtMessage.setText("");
         } catch (IOException ex) {
             System.out.println("Erro no envio da mensagem!");
             Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnEnviarActionPerformed
+
+    private void txtMessageKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMessageKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnEnviar.doClick();
+        }
+    }//GEN-LAST:event_txtMessageKeyPressed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        if (JOptionPane.showConfirmDialog(null, "Quer mesmo sair?", "SAIR", 
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION)
+        {
+            txtChat.append("\n" + userLocal.getNome() + "saiu!");
+            rec.stopReceiver();
+            System.exit(0);
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -130,15 +163,14 @@ public class Chat extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Chat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
                 try {
                     new Chat().setVisible(true);
-                    
-                    Receiver rec = new Receiver(PORTA);
+                    rec = new Receiver(PORTA);
                     rec.start();
                 } catch (IOException ex) {
                     System.out.println("Erro no recebimento de uma mensagem!");
@@ -149,7 +181,7 @@ public class Chat extends javax.swing.JFrame {
     }
     
     public static void recebeMsg(String msg) {
-        txtChat.append("/n" + userLocal.getNome() + ": " + msg);
+        txtChat.append("\n" + userLocal.getNome() + ": " + msg);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

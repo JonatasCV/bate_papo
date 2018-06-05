@@ -18,6 +18,15 @@ public class Receiver extends Thread {
         this.ss = new ServerSocket(porta);
     }
     
+    public void stopReceiver() {
+        try {
+            this.soc.close();
+            this.ss.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Receiver.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     @Override
     public void run() {
         try {
@@ -32,9 +41,6 @@ public class Receiver extends Thread {
 
                     Chat.recebeMsg(msg);
 
-                    if (msg.equalsIgnoreCase("sair"))
-                        break;
-                    
                     this.objIn.close();
                     Thread.sleep((long) 1000);
                 } catch (EOFException ex) {
@@ -43,9 +49,6 @@ public class Receiver extends Thread {
                     Logger.getLogger(Receiver.class.getName()).log(Level.SEVERE, null, ex);
                 }                
             }
-
-            this.soc.close();
-            this.ss.close();
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(Receiver.class.getName()).log(Level.SEVERE, null, ex);
         }

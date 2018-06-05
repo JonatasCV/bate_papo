@@ -187,6 +187,8 @@ public class Cliente extends javax.swing.JFrame {
             userSelected = obj;
         }
         
+        // VERIFICAR SE USUARIO SELECIONADO AINDA ESTA NO BANCO, DISPONIVEL PARA CONVERSA
+        
         this.setVisible(false);
         new tcp.Chat(userLogged, userSelected).setVisible(true);        
     }//GEN-LAST:event_btnConversaActionPerformed
