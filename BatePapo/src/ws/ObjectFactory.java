@@ -138,6 +138,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ExcluirTopicosInteresseRequest }
+     * 
+     */
+    public ExcluirTopicosInteresseRequest createExcluirTopicosInteresseRequest() {
+        return new ExcluirTopicosInteresseRequest();
+    }
+
+    /**
      * Create an instance of {@link PesquisaInteressadosTopicoResponse }
      * 
      */
@@ -151,6 +159,14 @@ public class ObjectFactory {
      */
     public IncluirUsuarioRequest createIncluirUsuarioRequest() {
         return new IncluirUsuarioRequest();
+    }
+
+    /**
+     * Create an instance of {@link ExcluirTopicosInteresseResponse }
+     * 
+     */
+    public ExcluirTopicosInteresseResponse createExcluirTopicosInteresseResponse() {
+        return new ExcluirTopicosInteresseResponse();
     }
 
     /**

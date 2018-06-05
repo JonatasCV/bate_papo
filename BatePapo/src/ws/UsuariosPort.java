@@ -37,6 +37,18 @@ public interface UsuariosPort {
 
     /**
      * 
+     * @param excluirTopicosInteresseRequest
+     * @return
+     *     returns ws.ExcluirTopicosInteresseResponse
+     */
+    @WebMethod
+    @WebResult(name = "excluirTopicosInteresseResponse", targetNamespace = "http://www.batepapo.com/xml/users", partName = "excluirTopicosInteresseResponse")
+    public ExcluirTopicosInteresseResponse excluirTopicosInteresse(
+        @WebParam(name = "excluirTopicosInteresseRequest", targetNamespace = "http://www.batepapo.com/xml/users", partName = "excluirTopicosInteresseRequest")
+        ExcluirTopicosInteresseRequest excluirTopicosInteresseRequest);
+
+    /**
+     * 
      * @param pesquisaInteressadosTopicoRequest
      * @return
      *     returns ws.PesquisaInteressadosTopicoResponse
