@@ -1,17 +1,17 @@
-package udp;
+package tcp;
 
-import java.net.SocketException;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import udp.servidor.UdpServer;
+import tcp.servidor.TcpServer;
 
 public class Servidor {
-    
-    public static void main(String[] args) {        
+
+    public static void main(String[] args){
         try {
-            UdpServer s = new UdpServer();
+            TcpServer s = new TcpServer();
             s.start();
             
             Timer t = new Timer();            
@@ -22,7 +22,7 @@ public class Servidor {
                         s.start();
                 }
             }, 2*60*1000, 2*60*1000);
-        } catch (SocketException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

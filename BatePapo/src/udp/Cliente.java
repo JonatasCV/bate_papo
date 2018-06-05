@@ -5,15 +5,11 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import tcp.ChatCliente;
 import udp.client.UdpClient;
 import ws.Usuario;
 
@@ -51,6 +47,9 @@ public class Cliente extends javax.swing.JFrame {
         btnOk = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setResizable(false);
 
         jLabel1.setText("Nome do Usuário:");
 
@@ -169,6 +168,7 @@ public class Cliente extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     
     public List<String> addSelectedTopicosToList(){
@@ -208,13 +208,13 @@ public class Cliente extends javax.swing.JFrame {
             
             //Cria lista de topicos de interesse do usario para login
             List<String> addSelectedTopicosToList = addSelectedTopicosToList();
-            Usuario response = client.login(getTxtNomeUser().getText(), addSelectedTopicosToList);
+            Usuario response = client.login(txtNomeUser.getText(), addSelectedTopicosToList);
             
             System.out.println("Usuario " + response.getNome());
             
-            if(response.getNome() != null){
+            if(response.getNome() != null && !response.getNome().isEmpty()){
                 this.setVisible(false);
-                new ChatCliente(response).setVisible(true);
+                new tcp.Cliente(response).setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Usuario não encontrado");
             }
@@ -224,7 +224,7 @@ public class Cliente extends javax.swing.JFrame {
         } catch (SocketException ex) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro na conexão com o servidor!");
         } catch (ClassNotFoundException | IOException ex) {
-            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Nome de usuário inválido!");
         }
     }//GEN-LAST:event_btnOkActionPerformed
 
@@ -375,13 +375,5 @@ public class Cliente extends javax.swing.JFrame {
 
     public void setjPanel1(JPanel jPanel1) {
         this.jPanel1 = jPanel1;
-    }
-
-    public JTextField getTxtNomeUser() {
-        return txtNomeUser;
-    }
-
-    public void setTxtNomeUser(JTextField txtNomeUser) {
-        this.txtNomeUser = txtNomeUser;
     }
 }

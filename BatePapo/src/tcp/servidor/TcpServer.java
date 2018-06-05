@@ -3,16 +3,12 @@ package tcp.servidor;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import soap.UsuarioService;
-import ws.InserirPesquisaRequest;
-import ws.PesquisaInteressadosTopicoRequest;
-import ws.PesquisaInteressadosTopicoResponse;
 import ws.Usuario;
 
 public class TcpServer extends Thread{
@@ -25,10 +21,11 @@ public class TcpServer extends Thread{
 
     public TcpServer() throws IOException {
         // Criando server socket
-       ss = new ServerSocket(2020);
+       ss = new ServerSocket(PORTA);
        service = new UsuarioService();
     }
     
+    @Override
     public void run() {
         
         running = true;
