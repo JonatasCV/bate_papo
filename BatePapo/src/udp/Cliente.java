@@ -1,24 +1,23 @@
 package udp;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import tcp.ChatCliente;
+import udp.client.UdpClient;
 import ws.Usuario;
 
 public class Cliente extends javax.swing.JFrame {
-
-    private static final String HOST  = "localhost";
-    private static final int PORTA    = 11223;
-    private static final int MSG_SIZE = 100;
 
     /**
      * Creates new form Cliente
@@ -61,11 +60,6 @@ public class Cliente extends javax.swing.JFrame {
 
         chk1.setText("Eleições 2018");
         chk1.setName("chk1"); // NOI18N
-        chk1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chk1ActionPerformed(evt);
-            }
-        });
 
         chk2.setText("Segurança Pública");
         chk2.setName("chk2"); // NOI18N
@@ -99,7 +93,7 @@ public class Cliente extends javax.swing.JFrame {
                     .addComponent(chk2)
                     .addComponent(chk3)
                     .addComponent(chk4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(chk5)
                     .addComponent(chk6)
@@ -150,7 +144,7 @@ public class Cliente extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNomeUser))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(0, 10, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -176,81 +170,45 @@ public class Cliente extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    public List<String> addSelectedTopicosToList(){
+        List<String> selected = new ArrayList<>();
+        if (getChk1().isSelected()) {
+            selected.add("1");
+        }
+        if (getChk2().isSelected()){
+           selected.add("2");                
+        }
+        if (getChk3().isSelected()){
+           selected.add("3");
+        }
+        if (getChk4().isSelected()){
+           selected.add("4");           
+        }
+        if (getChk5().isSelected()){
+           selected.add("5");           
+        }
+        if (getChk6().isSelected()){
+           selected.add("6");              
+        }
+        if (getChk7().isSelected()){
+           selected.add("7");                
+        }
+        if (getChk8().isSelected()){
+           selected.add("8");
+        }
+        return selected;
+    }
+    
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
+        
         try {
-            byte msg[] = new byte[MSG_SIZE];
-            InetAddress addr = InetAddress.getByName(HOST);
+            //Cria instancia de cliente
+            UdpClient client = new UdpClient();
             
-            DatagramSocket soc = new DatagramSocket();
-            DatagramPacket pct;
-            
-            String nomeUser = txtNomeUser.getText();
-
-            if (nomeUser.length() > MSG_SIZE) {
-                JOptionPane.showMessageDialog(null, "O nome do usuário não pode ultrapassar " + MSG_SIZE + " caracteres!");
-                return;
-            }
-
-            msg = nomeUser.getBytes();
-            pct = new DatagramPacket(msg, msg.length, addr, PORTA);            
-            soc.send(pct);
-
-            if (chk1.isSelected()) {
-                msg = "1".getBytes();
-                pct = new DatagramPacket(msg, msg.length, addr, PORTA);
-                soc.send(pct);
-            }
-            if (chk2.isSelected()){
-                msg = "2".getBytes();
-                pct = new DatagramPacket(msg, msg.length, addr, PORTA); 
-                soc.send(pct);                
-            }
-            if (chk3.isSelected()){
-                msg = "3".getBytes();
-                pct = new DatagramPacket(msg, msg.length, addr, PORTA); 
-                soc.send(pct);
-            }
-            if (chk4.isSelected()){
-                msg = "4".getBytes();
-                pct = new DatagramPacket(msg, msg.length, addr, PORTA); 
-                soc.send(pct);                
-            }
-            if (chk5.isSelected()){
-                msg = "5".getBytes();
-                pct = new DatagramPacket(msg, msg.length, addr, PORTA); 
-                soc.send(pct);                
-            }
-            if (chk6.isSelected()){
-                msg = "6".getBytes();
-                pct = new DatagramPacket(msg, msg.length, addr, PORTA); 
-                soc.send(pct);                
-            }
-            if (chk7.isSelected()){
-                msg = "7".getBytes();
-                pct = new DatagramPacket(msg, msg.length, addr, PORTA); 
-                soc.send(pct);                
-            }
-            if (chk8.isSelected()){
-                msg = "8".getBytes();
-                pct = new DatagramPacket(msg, msg.length, addr, PORTA); 
-                soc.send(pct);
-            }
-            
-            msg = "end".getBytes();
-            pct = new DatagramPacket(msg, msg.length, addr, PORTA); 
-            soc.send(pct);
-            
-            byte[] receiveBuf = new byte[256];
-            
-             //Create a response DatagramPacket and wait for server response
-            DatagramPacket receivePacket = new DatagramPacket(receiveBuf, receiveBuf.length);
-            soc.receive(receivePacket);
-            
-            //Read and convert response to UDPReponse
-            ByteArrayInputStream in = new ByteArrayInputStream(receivePacket.getData());
-            ObjectInputStream is = new ObjectInputStream(in);
-            Usuario response = (Usuario) is.readObject();
+            //Cria lista de topicos de interesse do usario para login
+            List<String> addSelectedTopicosToList = addSelectedTopicosToList();
+            Usuario response = client.login(getTxtNomeUser().getText(), addSelectedTopicosToList);
             
             System.out.println("Usuario " + response.getNome());
             
@@ -258,27 +216,17 @@ public class Cliente extends javax.swing.JFrame {
                 this.setVisible(false);
                 new ChatCliente(response).setVisible(true);
             } else {
-                 JOptionPane.showMessageDialog(null, "Usuario não encontrado");
-                return;
+                JOptionPane.showMessageDialog(null, "Usuario não encontrado");
             }
             
-            // recebe do server os users disponiveis para conversa nos topicos escolhidos
-            
-            soc.close();
         } catch (UnknownHostException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível estabelecer conexão com o servidor!");
         } catch (SocketException ex) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro na conexão com o servidor!");
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Ocorreu um erro no envio das mensagens ao servidor!");
-        } catch (ClassNotFoundException ex) {
+        } catch (ClassNotFoundException | IOException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnOkActionPerformed
-
-    private void chk1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chk1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -332,4 +280,108 @@ public class Cliente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtNomeUser;
     // End of variables declaration//GEN-END:variables
+
+    public JButton getBtnOk() {
+        return btnOk;
+    }
+
+    public void setBtnOk(JButton btnOk) {
+        this.btnOk = btnOk;
+    }
+
+    public JCheckBox getChk1() {
+        return chk1;
+    }
+
+    public void setChk1(JCheckBox chk1) {
+        this.chk1 = chk1;
+    }
+
+    public JCheckBox getChk2() {
+        return chk2;
+    }
+
+    public void setChk2(JCheckBox chk2) {
+        this.chk2 = chk2;
+    }
+
+    public JCheckBox getChk3() {
+        return chk3;
+    }
+
+    public void setChk3(JCheckBox chk3) {
+        this.chk3 = chk3;
+    }
+
+    public JCheckBox getChk4() {
+        return chk4;
+    }
+
+    public void setChk4(JCheckBox chk4) {
+        this.chk4 = chk4;
+    }
+
+    public JCheckBox getChk5() {
+        return chk5;
+    }
+
+    public void setChk5(JCheckBox chk5) {
+        this.chk5 = chk5;
+    }
+
+    public JCheckBox getChk6() {
+        return chk6;
+    }
+
+    public void setChk6(JCheckBox chk6) {
+        this.chk6 = chk6;
+    }
+
+    public JCheckBox getChk7() {
+        return chk7;
+    }
+
+    public void setChk7(JCheckBox chk7) {
+        this.chk7 = chk7;
+    }
+
+    public JCheckBox getChk8() {
+        return chk8;
+    }
+
+    public void setChk8(JCheckBox chk8) {
+        this.chk8 = chk8;
+    }
+
+    public JLabel getjLabel1() {
+        return jLabel1;
+    }
+
+    public void setjLabel1(JLabel jLabel1) {
+        this.jLabel1 = jLabel1;
+    }
+
+    public JLabel getjLabel2() {
+        return jLabel2;
+    }
+
+    public void setjLabel2(JLabel jLabel2) {
+        this.jLabel2 = jLabel2;
+    }
+
+    public JPanel getjPanel1() {
+        return jPanel1;
+    }
+
+    public void setjPanel1(JPanel jPanel1) {
+        this.jPanel1 = jPanel1;
+    }
+
+    public JTextField getTxtNomeUser() {
+        return txtNomeUser;
+    }
+
+    public void setTxtNomeUser(JTextField txtNomeUser) {
+        this.txtNomeUser = txtNomeUser;
+    }
 }
